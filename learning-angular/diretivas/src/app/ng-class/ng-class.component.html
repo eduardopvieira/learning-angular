@@ -1,0 +1,15 @@
+<h1>Utilizando class binding:</h1>
+
+
+<h1>
+    <i class="glyphicon" [class.bi-star]="!meuFavorito" [class.bi-star-fill]="meuFavorito" (click)="isFavorito()">
+    </i>
+</h1>
+
+<br><br>
+
+<h1>Utilizando ngClass</h1>
+
+<h1>
+    <i class="bi" [ngClass]="{'bi-star': !meuFavorito, 'bi-star-fill': meuFavorito}" (click)="isFavorito()"></i>
+</h1>

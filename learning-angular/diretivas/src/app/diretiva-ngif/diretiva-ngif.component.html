@@ -1,0 +1,24 @@
+<h5>*ngIf</h5>
+
+<p *ngIf="mostrarCursos; else noCourses">
+    Lista de cursos aqui:
+    <li *ngFor="let curso of cursos">
+        {{ curso }}
+    </li>
+</p>
+
+
+<ng-template #noCourses>
+    Não existem cursos para serem listados.
+</ng-template>
+
+<button (click)="onMostrarCursos()">Clique aqui para alternar</button>
+
+<br><br>
+
+<p *ngIf="mostrarCursos"></p>
+
+
+<ngTemplate [ngIf]="mostrarCursos">
+    <div>Lista de cursos aqui</div>
+</ngTemplate>

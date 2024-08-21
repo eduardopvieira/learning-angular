@@ -1,0 +1,15 @@
+<h5> Login </h5>
+
+<div class="row">
+    <div class="col-md-12">
+        <input [(ngModel)]="user.nome" class="form-control" type="text" placeholder="Nome" id="usuario">
+    </div>
+    <br><br>
+    <div class="col-md-12">
+        <input [(ngModel)]="user.senha" class="form-control" type="password" placeholder="Senha" id="senha">
+    </div>
+    <br><br>
+    <div class="col-md-3">
+        <input class="btn btn-primary" type="submit" value="Fazer Login" (click)="fazerLogin()">
+    </div>
+</div>

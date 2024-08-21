@@ -1,0 +1,60 @@
+<h1> Exemplo de pipes </h1>
+<br><br>
+
+<p>Titulo: {{ livro.titulo | uppercase | camelCase }}</p>
+<!-- Deixa o titulo em letra maiuscula, mas o camelCase sobrepõe e deixa tudo com letra maiuscula -->
+
+<p>Estrelas: {{ livro.rating | number:'1.1-2' }}</p>
+<!-- Altera o formato do numero. vai ficar 1 numero antes da virgula e 1 a 2 numeros depois da virgula-->
+
+<p>Páginas: {{ livro.numPags | number }}</p> <!-- Deixa em numero normal -->
+
+<p>Data de lançamento: {{ livro.dataLancamento | date: 'dd/MM/yyyy' }}</p>
+<!-- Formata a data para o modelo dia/mes/ano-->
+
+<p>Preço: {{ livro.preco | currency: 'BRL' }}</p> <!-- Deixa a moeda em real -->
+
+<p>URL: {{ livro.url }}</p>
+
+<br>
+
+<p>Livro: {{ livro | json }}</p> <!-- Mostra o objeto inteiro em formato json -->
+
+<h1> Pipe puro: </h1>
+
+<ul>
+    <li *ngFor="let liv of livros | filtroArray:'ava'">
+        <!-- NAO FAÇA FILTRO DE ARRAY EM PIPES, EH HORRIVEL, SO PRA USAR DE EXEMPLO -->
+        {{ liv }}
+    </li>
+</ul>
+
+
+<h1> Pipe impuro: </h1>
+
+<ul>
+    <li *ngFor="let liv of livros | filtroArrayImpuro:'ava'">
+        <!-- NAO FAÇA FILTRO DE ARRAY EM PIPES, EH HORRIVEL, SO PRA USAR DE EXEMPLO -->
+        {{ liv }}
+    </li>
+</ul>
+
+<h1>maneira certa:</h1>
+
+
+<ul>
+    <li *ngFor="let liv of obterLivros()">
+        {{ liv }}
+    </li>
+</ul>
+
+
+<input type="text" #novoLivro>
+<button (click)="addLivros(novoLivro.value)">Add Curso</button>
+
+
+<p> {{ valorAsync | async }}</p>
+
+<br><br>
+
+<p> {{ valorAsync2 | async }}</p>

@@ -1,0 +1,31 @@
+<div appFundoAmarelo>Texto com fundo amarelo</div>
+<br>
+<button appFundoAmarelo>Botão com fundo amarelo</button>
+<br><br>
+<p HighlightMouse>Texto com highlight quando passo o mouse</p>
+<br>
+<p Highlight [defaultColor]="'grey'" [Highlight]="'red'">Texto com highlight de cores customizadas</p>
+<br><br>
+
+<div *ngIf="mostrarCursos">
+    Lista de cursos aqui:
+</div>
+
+<div *ngElse="mostrarCursos">
+    Nao tem curso
+</div>
+
+
+<ng-template #noCourses>
+    Não existem cursos para serem listados.
+</ng-template>
+
+<button (click)="onMostrarCursos()">Clique aqui para alternar</button>
+
+<br><br>
+
+<ng-template [ngElse]="mostrarCursos">
+    <div>
+        Não existem cursos para serem listados
+    </div>
+</ng-template>

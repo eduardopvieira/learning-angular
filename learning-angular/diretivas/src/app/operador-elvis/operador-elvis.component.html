@@ -1,0 +1,7 @@
+<p>Descricao da tarefa: {{ tarefa.desc }} </p>
+<!--<p>Responsavel: {{ tarefa.responsavel.nome }}</p>   <-- Fazer assim é errado                  -->
+
+
+<p>Responsavel: {{ tarefa.responsavel != null ? tarefa.responsavel.nome : 'Ninguém'}}</p>
+<!--    <-- Esse estilo fica bagunçado muito facil  -->
+<p>Responsavel: {{ tarefa.responsavel?.usuario?.nome}}</p>
