@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { AlunosRoutingModule } from './alunos/alunos-routing.module';
 import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { CursosGuard } from './guards/cursos.guard';
+import { AlunosGuard } from './guards/alunos.guard';
 
 
 @NgModule({
@@ -27,7 +29,7 @@ import { AuthGuard } from './guards/auth.guard';
     AlunosRoutingModule,
     FormsModule
   ],
-  providers: [AuthService, AuthGuard], //servicos. quem esta em provider tem escopo global na aplicaçao
+  providers: [AuthService, AuthGuard, CursosGuard, AlunosGuard], //servicos. quem esta em provider tem escopo global na aplicaçao
   bootstrap: [AppComponent]
 })
 export class AppModule { }

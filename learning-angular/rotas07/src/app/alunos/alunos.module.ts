@@ -6,7 +6,9 @@ import { AlunosComponent } from './alunos.component';
 import { AlunoFormComponent } from './aluno-form/aluno-form.component';
 import { AlunoDetalheComponent } from './aluno-detalhe/aluno-detalhe.component';
 import { AlunosService } from './alunos.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+//import { alunosDeactivateGuard } from '../guards/alunos.deactivate.guard';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 
 @NgModule({
@@ -18,8 +20,10 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     AlunosRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [AlunosService]
+  providers: [AlunosService
+  ]
 })
 export class AlunosModule { }
