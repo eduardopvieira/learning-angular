@@ -7,6 +7,8 @@ import { Aluno } from './aluno'
 })
 export class AlunosService {
 
+  aluno: Aluno = { id: 0, nome: '', email: '' };
+
   private alunos: Aluno[] = [
     { id: 1, nome: 'Aluno 01', email: 'aluno01@email.com' },
     { id: 2, nome: 'Aluno 02', email: 'aluno02@email.com' },
@@ -23,12 +25,14 @@ export class AlunosService {
     let idNum = parseInt(id);
     console.log(idNum)
 
-    let alunosLista = this.getAlunos();
-    for (let i = 0; i < alunosLista.length; i++) {
-      if (alunosLista[i].id == idNum) {
+
+    for (let i = 0; i < this.alunos.length; i++) {
+      this.aluno = this.alunos[i];
+      if (this.aluno.id == idNum) {
         return this.alunos[i];
       }
     }
+    return null;
   }
 
 

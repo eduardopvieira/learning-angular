@@ -1,0 +1,96 @@
+<form #formTemplate="ngForm" (ngSubmit)="onSubmit(formTemplate)" class="form-horizontal">
+
+    <div class="form-group" [ngClass]="aplicaCssErro(nomeInput)">
+
+        <div class="col-sm-12">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control " id="nome" name="nome" [(ngModel)]="usuario.nome" placeholder="Nome"
+                required #nomeInput="ngModel">
+            <div *ngIf="verificaValidTouched(nomeInput)" class="alert alert-danger" role="alert">
+                Nome Obrigatório
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="form-group" [ngClass]="aplicaCssErro(emailInput)">
+
+        <div class="col-sm-12">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" [ngModel]="usuario.email"
+                placeholder="nome@email.com" required email #emailInput="ngModel">
+            <div *ngIf="verificaValidTouched(emailInput)" class="alert alert-danger" role="alert">
+                Email invalido.
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div ngModelGroup="endereco">
+        <div class="form-group" class="row">
+            <div class="col-md-3" [ngClass]="aplicaCssErro(cepInput)">
+                <label for="cep" class="control-label">CEP</label>
+                <input type="text" class="form-control" id="cep" name="cep" ngModel required #cepInput="ngModel"
+                    (blur)="consultaCEP(cepInput.value, formTemplate)">
+                <div *ngIf="verificaValidTouched(cepInput)" class="alert alert-danger" role=alert>
+                    CEP Inválido.
+                </div>
+            </div>
+            <div class="col-md-3" [ngClass]="aplicaCssErro(nomeInput)">
+                <label for="numero" class="control-label">Número</label>
+                <input type="text" class="form-control" id="numero" name="numero" ngModel required
+                    #numeroInput="ngModel">
+                <div *ngIf="verificaValidTouched(numeroInput)" class="alert alert-danger" role=alert>
+                    Número Inválido.
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="complemento" class="control-label">Complemento</label>
+                <input type="text" class="form-control" id="complemento" name="complemento" ngModel
+                    #complementoInput="ngModel">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12" [ngClass]="aplicaCssErro(ruaInput)">
+                <label for="rua" class="form-label">Rua</label>
+                <input type="text" class="form-control" id="rua" name="rua" required ngModel #ruaInput="ngModel">
+                <div *ngIf="verificaValidTouched(ruaInput)" class="alert alert-danger" role="alert">Rua inválida</div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-5" [ngClass]="aplicaCssErro(bairroInput)">
+                <label for="bairro" class="form-label">Bairro</label>
+                <input type="text" class="form-control" id="bairro" name="bairro" required ngModel
+                    #bairroInput="ngModel">
+                <div *ngIf="verificaValidTouched(bairroInput)" class="alert alert-danger" role="alert">Rua inválida
+                </div>
+            </div>
+            <div class="col-md-4" [ngClass]="aplicaCssErro(cidadeInput)">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input type="text" class="form-control" id="cidade" name="cidade" required ngModel
+                    #cidadeInput="ngModel">
+                <div *ngIf="verificaValidTouched(cidadeInput)" class="alert alert-danger" role="alert">Rua inválida
+                </div>
+            </div>
+            <div class="col-md-3" [ngClass]="aplicaCssErro(estadoInput)">
+                <label for="estado" class="form-label">Estado</label>
+                <input type="text" class="form-control" id="estado" name="estado" required ngModel
+                    #estadoInput="ngModel">
+                <div *ngIf="verificaValidTouched(estadoInput)" class="alert alert-danger" role="alert">Estado
+                    inválido</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <br><br>
+
+
+    <button type="submit" class="btn btn-primary" [disabled]="!formTemplate.valid">Submit</button>
+</form>
+
+<app-form-debug [form]="formTemplate"></app-form-debug>

@@ -11,6 +11,7 @@ import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { CursosGuard } from './guards/cursos.guard';
 import { AlunosGuard } from './guards/alunos.guard';
+import { RotaNaoEncontradaComponent } from './rota-nao-encontrada/rota-nao-encontrada.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { AlunosGuard } from './guards/alunos.guard';
     AppComponent,
     HomeComponent,
     LoginComponent,
+    RotaNaoEncontradaComponent,
 
   ],
   imports: [ //modulos

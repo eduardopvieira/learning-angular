@@ -9,7 +9,7 @@ export class AlunoDetalheResolver implements Resolve<Aluno> {
 
     constructor(private alunosService: AlunosService) { }
 
-    resolve(route: ActivatedRouteSnapshot): Observable<Aluno> | Promise<Aluno> | Aluno {
+    resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
         let id = route.params['id'];
 
         return this.alunosService.getAluno(id);

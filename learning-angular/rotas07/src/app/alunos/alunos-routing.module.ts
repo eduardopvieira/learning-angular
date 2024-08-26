@@ -4,7 +4,6 @@ import { AlunosComponent } from './alunos.component';
 import { AlunoDetalheComponent } from './aluno-detalhe/aluno-detalhe.component';
 import { AlunoFormComponent } from './aluno-form/aluno-form.component';
 import { AlunosGuard } from '../guards/alunos.guard';
-import { AlunosDeactivateGuard } from '../guards/alunos.deactivate.guard';
 import { AlunoDetalheResolver } from './aluno-detalhe/guards/aluno-detalhe.resolver';
 
 const routes: Routes = [ //No angular, rotas sao avaliadas na ordem em que sao inseridas.
