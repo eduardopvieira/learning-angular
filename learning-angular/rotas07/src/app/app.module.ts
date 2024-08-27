@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { AlunosRoutingModule } from './alunos/alunos-routing.module';
 import { AuthService } from './login/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { AuthGuard } from './guards/auth.guard';
     AppComponent,
     HomeComponent,
     LoginComponent,
+    PaginaNaoEncontradaComponent,
 
   ],
   imports: [ //modulos

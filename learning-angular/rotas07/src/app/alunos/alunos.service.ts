@@ -18,15 +18,18 @@ export class AlunosService {
   }
 
   getAluno(id: string) {
+    console.log(typeof id)
     let idNum = parseInt(id);
-    console.log(idNum)
+    console.log(typeof idNum)
 
-    let alunosLista = this.getAlunos();
-    for (let i = 0; i < alunosLista.length; i++) {
-      if (alunosLista[i].id == idNum) {
-        return this.alunos[i];
+    for (let i = 0; i < this.alunos.length; i++) {
+      let aluno = this.alunos[i];
+      console.log(aluno)
+      if (aluno.id == idNum) {
+        return aluno;
       }
     }
+  
   }
 
 
