@@ -12,7 +12,7 @@ import { CampoControlErroComponent } from './campo-control-erro/campo-control-er
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

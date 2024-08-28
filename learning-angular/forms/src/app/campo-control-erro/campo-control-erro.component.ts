@@ -6,8 +6,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./campo-control-erro.component.css']
 })
 export class CampoControlErroComponent {
-  @Input() mostrarErro: boolean = false;
   @Input() msgErro: string = '';
+  @Input() mostrarErro: boolean = false;
 
-  
+
 }

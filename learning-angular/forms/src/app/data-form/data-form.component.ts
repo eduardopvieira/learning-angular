@@ -10,44 +10,43 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class DataFormComponent {
 
-  formulario! : FormGroup;
+  formulario!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
-  
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+
   resetar() {
     this.formulario.reset();
   }
 
-  aplicaCssErro(campo: any) {
+  verificaValidTouched(campo: string) {
+    const control = this.formulario.controls[campo];
+
+    return control && !control.valid && control.touched;
+    //return !this.formulario.controls[campo].valid && this.formulario.controls[campo].touched;
+  }
+
+  aplicaCssErro(campo: string) {
     return {
-      'is-invalid': this.verificaValidTouched(campo),
-      'is-valid': this.verificaValidTouched(campo)
+      'has-error': this.verificaValidTouched(campo),
     }
   }
 
-  verificaValidTouched(campo: string): boolean {
-
-    let control = this.formulario.get('campo')
-    return control? !control.valid && control.touched : false;
-
-  }
-
   onSubmit() {
-    
-    console.log(this.formulario.value); 
-    
+
+    console.log(this.formulario.value);
+
     if (this.formulario.valid) {
 
       this.http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
-      .pipe(map((res: any) => res))
-      .subscribe((dados: any) => {
-        console.log(dados);
-        //reseta o form apos a enviada da requisiçao:
-        
-         this.formulario.reset();
+        .pipe(map((res: any) => res))
+        .subscribe((dados: any) => {
+          console.log(dados);
+          //reseta o form apos a enviada da requisiçao:
+
+          this.formulario.reset();
         });
     } else {
-      alert ('erro')
+      alert('erro')
     }
   }
 

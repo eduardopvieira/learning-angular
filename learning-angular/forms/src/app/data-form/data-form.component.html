@@ -1,17 +1,15 @@
 <form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
-    <div class="form-group" [ngClass]="aplicaCssErro('nome')">
+    <div class="form-group" [ngClass]="aplicaCssErro('nomeFCN')">
         <div class="col-sm-12">
-            <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control " id="nome" formControlName="nome" placeholder="Nome">
-            
-            <app-campo-control-erro
-                [mostrarErro]="verificaValidTouched('nome')"
-                msgErro = "Nome é Obrigatório.">
-            </app-campo-control-erro>
+            <label for="nome" class="control-label">Nome</label>
         </div>
+        <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Nome">
+        </div>
+        <app-campo-control-erro [mostrarErro]="verificaValidTouched('nome')" msgErro="Nome inválido">
+        </app-campo-control-erro>
     </div>
-
     <br>
 
     <div class="form-group">
@@ -27,4 +25,4 @@
 
 </form>
 
-<app-form-debug [form]="formulario"></app-form-debug>
+<app-form-debug [form]="formulario">asd</app-form-debug>
