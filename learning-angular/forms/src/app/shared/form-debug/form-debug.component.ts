@@ -9,4 +9,16 @@ export class FormDebugComponent {
 
   @Input() form: any;
 
+  valid = false;
+
+  submitted = false;
+
+  onSubmit() {
+    this.submitted = this.form.submitted;
+  }
+
+  isValid() {
+    this.valid =  this.form.get('email').valid && this.form.get('nome').valid
+  }
+
 }

@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TemplateFormModule } from './template-form/template-form.module';
+import { DataFormModule } from './data-form/data-form.module';
+import { CampoControlErroComponent } from './campo-control-erro/campo-control-erro.component';
 
 
 
@@ -15,7 +17,7 @@ import { TemplateFormModule } from './template-form/template-form.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    //ReactiveFormsModule,
+    DataFormModule,
     BrowserAnimationsModule,
     TemplateFormModule
   ],
