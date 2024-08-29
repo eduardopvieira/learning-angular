@@ -15,6 +15,7 @@ export class TemplateFormComponent {
   }
 
   onSubmit(form: any) {
+
     console.log(form);
 
     this.http.post('enderecoServer/formUsuario', JSON.stringify(form.value)).pipe(map((res: any) => res)).subscribe((dados: any) => console.log(dados));
@@ -68,4 +69,7 @@ export class TemplateFormComponent {
       }
     });
   }
+
+
+
 }
