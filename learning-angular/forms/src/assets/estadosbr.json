@@ -1,137 +1,137 @@
 [
     {
-        "ID": "1",
-        "Sigla": "AC",
-        "Nome": "Acre"
+        "id": "1",
+        "sigla": "AC",
+        "nome": "Acre"
     },
     {
-        "ID": "2",
-        "Sigla": "AL",
-        "Nome": "Alagoas"
+        "id": "2",
+        "sigla": "AL",
+        "nome": "Alagoas"
     },
     {
-        "ID": "3",
-        "Sigla": "AM",
-        "Nome": "Amazonas"
+        "id": "3",
+        "sigla": "AM",
+        "nome": "Amazonas"
     },
     {
-        "ID": "4",
-        "Sigla": "AP",
-        "Nome": "Amapá"
+        "id": "4",
+        "sigla": "AP",
+        "nome": "Amapá"
     },
     {
-        "ID": "5",
-        "Sigla": "BA",
-        "Nome": "Bahia"
+        "id": "5",
+        "sigla": "BA",
+        "nome": "Bahia"
     },
     {
-        "ID": "6",
-        "Sigla": "CE",
-        "Nome": "Ceará"
+        "id": "6",
+        "sigla": "CE",
+        "nome": "Ceará"
     },
     {
-        "ID": "7",
-        "Sigla": "DF",
-        "Nome": "Distrito Federal"
+        "id": "7",
+        "sigla": "DF",
+        "nome": "Distrito Federal"
     },
     {
-        "ID": "8",
-        "Sigla": "ES",
-        "Nome": "Espírito Santo"
+        "id": "8",
+        "sigla": "ES",
+        "nome": "Espírito Santo"
     },
     {
-        "ID": "9",
-        "Sigla": "GO",
-        "Nome": "Goiás"
+        "id": "9",
+        "sigla": "GO",
+        "nome": "Goiás"
     },
     {
-        "ID": "10",
-        "Sigla": "MA",
-        "Nome": "Maranhão"
+        "id": "10",
+        "sigla": "MA",
+        "nome": "Maranhão"
     },
     {
-        "ID": "11",
-        "Sigla": "MG",
-        "Nome": "Minas Gerais"
+        "id": "11",
+        "sigla": "MG",
+        "nome": "Minas Gerais"
     },
     {
-        "ID": "12",
-        "Sigla": "MS",
-        "Nome": "Mato Grosso do Sul"
+        "id": "12",
+        "sigla": "MS",
+        "nome": "Mato Grosso do Sul"
     },
     {
-        "ID": "13",
-        "Sigla": "MT",
-        "Nome": "Mato Grosso"
+        "id": "13",
+        "sigla": "MT",
+        "nome": "Mato Grosso"
     },
     {
-        "ID": "14",
-        "Sigla": "PA",
-        "Nome": "Pará"
+        "id": "14",
+        "sigla": "PA",
+        "nome": "Pará"
     },
     {
-        "ID": "15",
-        "Sigla": "PB",
-        "Nome": "Paraíba"
+        "id": "15",
+        "sigla": "PB",
+        "nome": "Paraíba"
     },
     {
-        "ID": "16",
-        "Sigla": "PE",
-        "Nome": "Pernambuco"
+        "id": "16",
+        "sigla": "PE",
+        "nome": "Pernambuco"
     },
     {
-        "ID": "17",
-        "Sigla": "PI",
-        "Nome": "Piauí"
+        "id": "17",
+        "sigla": "PI",
+        "nome": "Piauí"
     },
     {
-        "ID": "18",
-        "Sigla": "PR",
-        "Nome": "Paraná"
+        "id": "18",
+        "sigla": "PR",
+        "nome": "Paraná"
     },
     {
-        "ID": "19",
-        "Sigla": "RJ",
-        "Nome": "Rio de Janeiro"
+        "id": "19",
+        "sigla": "RJ",
+        "nome": "Rio de Janeiro"
     },
     {
-        "ID": "20",
-        "Sigla": "RN",
-        "Nome": "Rio Grande do Norte"
+        "id": "20",
+        "sigla": "RN",
+        "nome": "Rio Grande do Norte"
     },
     {
-        "ID": "21",
-        "Sigla": "RO",
-        "Nome": "Rondônia"
+        "id": "21",
+        "sigla": "RO",
+        "nome": "Rondônia"
     },
     {
-        "ID": "22",
-        "Sigla": "RR",
-        "Nome": "Roraima"
+        "id": "22",
+        "sigla": "RR",
+        "nome": "Roraima"
     },
     {
-        "ID": "23",
-        "Sigla": "RS",
-        "Nome": "Rio Grande do Sul"
+        "id": "23",
+        "sigla": "RS",
+        "nome": "Rio Grande do Sul"
     },
     {
-        "ID": "24",
-        "Sigla": "SC",
-        "Nome": "Santa Catarina"
+        "id": "24",
+        "sigla": "SC",
+        "nome": "Santa Catarina"
     },
     {
-        "ID": "25",
-        "Sigla": "SE",
-        "Nome": "Sergipe"
+        "id": "25",
+        "sigla": "SE",
+        "nome": "Sergipe"
     },
     {
-        "ID": "26",
-        "Sigla": "SP",
-        "Nome": "São Paulo"
+        "id": "26",
+        "sigla": "SP",
+        "nome": "São Paulo"
     },
     {
-        "ID": "27",
-        "Sigla": "TO",
-        "Nome": "Tocantins"
+        "id": "27",
+        "sigla": "TO",
+        "nome": "Tocantins"
     }
 ]

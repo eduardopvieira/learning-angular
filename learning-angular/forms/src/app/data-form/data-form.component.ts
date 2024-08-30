@@ -4,6 +4,8 @@ import { map } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
+import { ConsultaCepService } from '../shared/services/consulta-cep.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-data-form',
@@ -13,9 +15,13 @@ import { EstadoBr } from '../shared/models/estado-br';
 export class DataFormComponent {
 
   formulario!: FormGroup;
-  estados!: EstadoBr[];
+  estados: Observable<EstadoBr[]> = new Observable<EstadoBr[]>();
+  cargos: any[] = [];
+  tecnologias: any[] = [];
+  newsletterOp: any[] = [];
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dropdownServ: DropdownService) { }
+
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dropdownServ: DropdownService, private cepService: ConsultaCepService) { }
 
   resetar() {
     this.formulario.reset();
@@ -42,25 +48,11 @@ export class DataFormComponent {
 
     let cep = this.formulario.get('endereco.cep')?.value;
 
-    //Nova variável "cep" somente com dígitos.
-    cep = cep.replace(/\D/g, '');
-
-    //Verifica se campo cep possui valor informado.
-    if (cep != "") {
-
-      //Expressão regular para validar o CEP.
-      var validacep = /^[0-9]{8}$/;
-
-      //Valida o formato do CEP.
-      if (validacep.test(cep)) {
-
-        this.resetaDadosForm();
-
-        this.http.get('//viacep.com.br/ws/' + cep + '/json').subscribe(dados => this.populaDadosForm(dados));
-
-      }
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)?.subscribe(dados => this.populaDadosForm(dados));
     }
   }
+
 
   populaDadosForm(dados: any) {
 
@@ -91,8 +83,6 @@ export class DataFormComponent {
     });
   }
 
-
-
   onSubmit() {
 
     console.log(this.formulario.value);
@@ -105,24 +95,36 @@ export class DataFormComponent {
           console.log(dados);
           //reseta o form apos a enviada da requisiçao:
 
-          this.formulario.reset();
+          this.resetar();
         });
     } else {
-      alert('erro')
+      alert('erro no submit')
       this.formulario.markAllAsTouched();
     }
   }
 
+  setarCargo() {
+    const cargo = { nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl' };
+    this.formulario.get('cargo')?.setValue(cargo);
+  }
+
+  setarTecnologias() {
+    this.formulario.get('tecnologias')?.setValue(['java', 'javascript', 'c++']);
+  }
+
+  compararCargos(obj1: any, obj2: any) {
+    return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2
+
+  }
+
   ngOnInit() {
 
-    this.dropdownServ.getEstadosBr().subscribe(
-      dados => {
-        this.estados = dados;
-        console.log(dados)
-      }
-    );
+    this.estados = this.dropdownServ.getEstadosBr()//.pipe(map((res: any) => res.uf)); 
+    this.cargos = this.dropdownServ.getCargos();
+    this.tecnologias = this.dropdownServ.getTecnologias();
+    this.newsletterOp = this.dropdownServ.getNewsletter();
 
-    console.log(this.estados);
+    console.log(this.estados)
 
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
@@ -135,7 +137,11 @@ export class DataFormComponent {
         bairro: [null, [Validators.required]],
         cidade: [null, [Validators.required]],
         estado: [null, [Validators.required]],
-      })
+      }),
+
+      cargo: [null],
+      tecnologias: [null],
+      newsletter: ['s']
     });
 
   };
