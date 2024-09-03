@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
 
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 import { FormValidations } from '../shared/form-validations';
+import { VerificaEmailService } from './services/verifica-email.service';
 
 @Component({
   selector: 'app-data-form',
@@ -25,7 +26,13 @@ export class DataFormComponent {
   frameworks = ['Angular', 'React', 'Vue', 'Sencha'];
 
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dropdownServ: DropdownService, private cepService: ConsultaCepService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private dropdownServ: DropdownService,
+    private cepService: ConsultaCepService,
+    private verEmailServ: VerificaEmailService
+  ) { }
 
   resetar() {
     this.formulario.reset();
@@ -140,7 +147,14 @@ export class DataFormComponent {
     return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2
   }
 
+  validarEmail(formControl: FormControl) {
+    return this.verEmailServ.verificarEmail(formControl.value)
+      .pipe(map(emailExiste => emailExiste ? { emailInvalido: true } : null));
+  }
+
   ngOnInit() {
+
+    //this.verEmailServ.verificarEmail('email@email.com').subscribe(); (coemntado pq era so pra ver se funcionava)
 
     this.estados = this.dropdownServ.getEstadosBr()//.pipe(map((res: any) => res.uf)); 
     this.cargos = this.dropdownServ.getCargos();
@@ -151,7 +165,9 @@ export class DataFormComponent {
 
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      email: [null, [Validators.required, Validators.email]],
+      //parametros abaixo: null = valor inicial, primeiro array eh validaçoes sincronas e o segundo é assincronas
+      //o .bind(this) é para fixar o metodo na instancia atual da classe
+      email: [null, [Validators.required, Validators.email], [this.validarEmail.bind(this)]],
       confirmarEmail: [null, [Validators.required, Validators.email, FormValidations.equalsTo('email')]],
       endereco: this.formBuilder.group({
         cep: [null, [Validators.required, FormValidations.cepValidator]],
@@ -169,6 +185,18 @@ export class DataFormComponent {
       termos: [null, [Validators.requiredTrue]],
       frameworks: this.buildFrameworks()
     });
+
+    this.formulario.get('endereco.cep')?.statusChanges
+      .pipe(
+        distinctUntilChanged(),
+        tap(value => console.log('valor CEP: ', value)),
+        switchMap(status => status === 'VALID' ?
+          this.cepService.consultaCEP(this.formulario.get('endereco.cep')?.value)
+          : empty()
+        )
+      )
+      .subscribe(dados => dados ? this.populaDadosForm(dados) : {})
+
 
   };
 }
