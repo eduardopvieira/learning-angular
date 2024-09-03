@@ -1,17 +1,19 @@
 <form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
-    <div class="form-group" [ngClass]="aplicaCssErro('nome')">
+    <app-input-field class="col-sm-12" formControlName="nome" [classeCss]="aplicaCssErro('nome')" id="nome" label="Nome"
+        [control]="formulario.get('nome')"></app-input-field>
+
+    <!--div class="form-group" [ngClass]="aplicaCssErro('nome')">
         <div class="col-sm-12">
             <label for="nome" class="control-label">Nome</label>
         </div>
         <div class="col-sm-12">
             <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Nome">
         </div>
-        <app-campo-control-erro [mostrarErro]="verificaValidTouched('nome')" msgErro="Nome inválido">
-        </app-campo-control-erro>
-    </div>
+        <app-error-msg [control]="$any(formulario.get('nome'))" label="Nome">
+        </app-error-msg>
+    </div-->
     <br>
-
     <div class="form-group" [ngClass]="aplicaCssErro('email')">
         <div class="col-sm-12">
             <label for="email" class="form-label">Email</label>
@@ -20,6 +22,12 @@
             <input type="email" class="form-control" id="email" formControlName="email" placeholder="nome@email.com">
         </div>
         <app-campo-control-erro [mostrarErro]="verificaValidTouched('email')" msgErro="Email inválido">
+        </app-campo-control-erro>
+        <app-campo-control-erro [mostrarErro]="formulario.get('email')?.status === 'PENDING'"
+            msgErro="Validando email...">
+        </app-campo-control-erro>
+        <app-campo-control-erro [mostrarErro]="!!formulario.get('email')?.hasError('emailInvalido')"
+            msgErro="Email ja cadastrado.">
         </app-campo-control-erro>
     </div>
 
@@ -53,7 +61,7 @@
         <div class="form-group" class="row">
             <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.cep')">
                 <label for="cep" class="control-label">CEP</label>
-                <input type="text" class="form-control" id="cep" formControlName="cep" (blur)="consultaCEP()">
+                <input type="text" class="form-control" id="cep" formControlName="cep">
                 <app-campo-control-erro [mostrarErro]=" verificaValidTouched('endereco.cep')" msgErro="CEP obrigatorio">
                 </app-campo-control-erro>
                 <app-campo-control-erro [mostrarErro]="formulario.get('endereco.cep')?.hasError('cepInvalido') ?? false"
