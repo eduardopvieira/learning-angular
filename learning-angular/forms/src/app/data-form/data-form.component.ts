@@ -9,16 +9,20 @@ import { EstadoBr } from '../shared/models/estado-br';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 import { FormValidations } from '../shared/form-validations';
 import { VerificaEmailService } from './services/verifica-email.service';
+import { BaseFormComponent } from '../shared/base-form/base-form.component';
+import { CidadeBr } from '../shared/models/cidade-br';
 
 @Component({
   selector: 'app-data-form',
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.css'
 })
-export class DataFormComponent {
+export class DataFormComponent extends BaseFormComponent {
 
-  formulario!: FormGroup;
-  estados: Observable<EstadoBr[]> = new Observable<EstadoBr[]>();
+  //formulario!: FormGroup;
+  //estados: Observable<EstadoBr[]> = new Observable<EstadoBr[]>();
+  estados: EstadoBr[] = [];
+  cidades: CidadeBr[] = [];
   cargos: any[] = [];
   tecnologias: any[] = [];
   newsletterOp: any[] = [];
@@ -32,27 +36,8 @@ export class DataFormComponent {
     private dropdownServ: DropdownService,
     private cepService: ConsultaCepService,
     private verEmailServ: VerificaEmailService
-  ) { }
-
-  resetar() {
-    this.formulario.reset();
-  }
-
-  verificaValidTouched(campo: string) {
-    const control = this.formulario.get(campo);
-
-    if (control == null) {
-      return false;
-    } else {
-      return control && !control.valid && (control.touched || control.dirty);
-    }
-
-  }
-
-  aplicaCssErro(campo: string) {
-    return {
-      'has-error': this.verificaValidTouched(campo),
-    }
+  ) {
+    super();
   }
 
   consultaCEP() {
@@ -105,8 +90,7 @@ export class DataFormComponent {
     });
   }
 
-  onSubmit() {
-
+  override submit() {
 
     let valueSubmit = Object.assign({}, this.formulario.value); //cria uma copia do formulario para nao afetar o original
 
@@ -118,21 +102,18 @@ export class DataFormComponent {
 
     console.log(valueSubmit);
 
-    if (this.formulario.valid) {
+    this.http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
+      .pipe(map((res: any) => res))
+      .subscribe((dados: any) => {
+        console.log(dados);
+        //reseta o form apos a enviada da requisiçao:
 
-      this.http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
-        .pipe(map((res: any) => res))
-        .subscribe((dados: any) => {
-          console.log(dados);
-          //reseta o form apos a enviada da requisiçao:
-
-          this.resetar();
-        });
-    } else {
-      alert('erro no submit')
-      this.formulario.markAllAsTouched();
-    }
+        this.resetar();
+      },
+        (error: any) => alert('erro')
+      );
   }
+
 
   setarCargo() {
     const cargo = { nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl' };
@@ -156,7 +137,9 @@ export class DataFormComponent {
 
     //this.verEmailServ.verificarEmail('email@email.com').subscribe(); (coemntado pq era so pra ver se funcionava)
 
-    this.estados = this.dropdownServ.getEstadosBr()//.pipe(map((res: any) => res.uf)); 
+    //this.estados = this.dropdownServ.getEstadosBr()//.pipe(map((res: any) => res.uf)); 
+    this.dropdownServ.getEstadosBr()
+      .subscribe(dados => this.estados = dados);
     this.cargos = this.dropdownServ.getCargos();
     this.tecnologias = this.dropdownServ.getTecnologias();
     this.newsletterOp = this.dropdownServ.getNewsletter();
@@ -197,6 +180,14 @@ export class DataFormComponent {
       )
       .subscribe(dados => dados ? this.populaDadosForm(dados) : {})
 
-
+    this.formulario.get('endereco.estado')?.valueChanges
+      .pipe(
+        tap(estado => console.log('Novo estado: ', estado)),
+        map((estado) => this.estados.filter((e) => e.sigla === estado)),
+        map((estados: any[]) => estados && estados.length > 0 ? estados[0].id : empty()),
+        switchMap((estadoId: number) => this.dropdownServ.getCidades(estadoId)),
+        tap(console.log)
+      )
+      .subscribe((cidades) => (this.cidades = cidades));
   };
 }
