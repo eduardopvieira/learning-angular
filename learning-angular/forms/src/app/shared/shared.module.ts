@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { FormDebugComponent } from './form-debug/form-debug.component';
 import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { InputFieldComponent } from './input-field/input-field.component';
-import { FormsModule } from '@angular/forms';
 
 
 
@@ -21,7 +22,7 @@ import { FormsModule } from '@angular/forms';
   exports: [
     FormDebugComponent,
     ErrorMsgComponent,
-    InputFieldComponent
+    InputFieldComponent,
   ]
 })
 export class SharedModule { }
