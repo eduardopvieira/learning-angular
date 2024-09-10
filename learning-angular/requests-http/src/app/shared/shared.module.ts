@@ -13,6 +13,7 @@ import { AlertModalComponent } from './alert-modal/alert-modal.component';
   ],
   exports: [
     AlertModalComponent
-  ]
+  ],
+
 })
 export class SharedModule { }
