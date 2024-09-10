@@ -4,6 +4,8 @@ import { Curso } from './curso';
 import { catchError, empty, Observable, of, Subject, subscribeOn } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AlertModalComponent } from '../../shared/alert-modal/alert-modal.component';
+import { AlertModalService } from '../../shared/alert-modal.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cursos-lista',
@@ -22,7 +24,9 @@ export class CursosListaComponent implements OnInit {
 
 
   constructor(private service: CursosService,
-    private modalService: BsModalService) {
+    private alertService: AlertModalService,
+    private router: Router,
+    private route: ActivatedRoute) {
 
   }
 
@@ -37,30 +41,19 @@ export class CursosListaComponent implements OnInit {
       .pipe(
         catchError(error => {
           console.error(error);
-          this.error$.next(true);
+          //this.error$.next(true);
+          this.handleError()
           return of();
         })
-      )
-
-
-
-    this.service.list().
-      pipe(
-        catchError(error => of())
-      )
-      .subscribe(
-        dados => {
-          console.log(dados)
-        },
-        error => console.error(error),
-        () => console.log('OBSERVABLE COMPLETO')
       )
   }
 
   handleError() {
-    this.bsModalRef = this.modalService.show(AlertModalComponent);
-    this.bsModalRef.content.type = 'danger'
-    this.bsModalRef.content.message = 'Erro ao carregar cursos. Tente novamente mais tarde'
+    this.alertService.showAlertDanger('´Não foi possivel carregar.')
+  }
+
+  onEdit(id: string) {
+    this.router.navigate(['editar', id], { relativeTo: this.route })
   }
 
 }
