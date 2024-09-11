@@ -52,8 +52,12 @@ export class CursosListaComponent implements OnInit {
     this.alertService.showAlertDanger('´Não foi possivel carregar.')
   }
 
-  onEdit(id: string) {
-    this.router.navigate(['editar', id], { relativeTo: this.route })
+  onEdit(id: string | null) {
+    if (id !== null) {
+      this.router.navigate(['editar', id], { relativeTo: this.route })
+    } else {
+      console.log("id é nulo deu erro aqui (cursos-lista-component.ts")
+    }
   }
 
 }
