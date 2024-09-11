@@ -20,13 +20,21 @@ export class CursosFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private service: CursosService,
     private modal: AlertModalService,
-    private location: Location,
+    //private location: Location,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
 
-    let registro = null;
+    const curso = this.route.snapshot.data['curso']
+
+
+    this.form = this.fb.group({
+      id: [curso.id],
+      nome: [curso.nome, [Validators.required, Validators.maxLength(20)]]
+    });
+
+    // let registro = null;
 
     // this.route.params.subscribe(
     //   (params: any) => {
@@ -40,34 +48,33 @@ export class CursosFormComponent implements OnInit {
     //   }
     // )
 
-    //esse código abaixo é o de cima refatorado
-    this.route.params
-      .pipe(
-        map((params: any) => params['id']),
-        switchMap(id => this.service.loadByID(id))
-      )
-      .subscribe(curso => { this.updateForm(curso) }
-      )
+    //esse código abaixo é o de cima refatorado (ele tb ta comentado pq agora ta tudo no resolver)
+    // this.route.params
+    //   .pipe(
+    //     map((params: any) => params['id']),
+    //     switchMap(id => this.service.loadByID(id))
+    //   )
+    //   .subscribe(curso => { this.updateForm(curso) }
+    //   )
 
     // concatMap -> ordem da requisiçao importa (se eu estou criando os registros 1, 2 e 3, vai receber os resultados dos registros 1 2 e 3 em ordem)
     // mergeMap -> ordem nao importa
     // exhaustMap -> casos de login. faz a requisiçao do 1, espera resposta, faz do 2, espera resposta, faz do 3, espera resposta...
 
-    console.log(registro)
+    //console.log(registro)
 
-    this.form = this.fb.group({
-      id: [null],
-      nome: [null, [Validators.required, Validators.maxLength(20)]]
-    });
+    //desnecessario por causa do resolver:
+
+    // updateForm(curso: Curso) {
+    //   this.form.patchValue({
+    //     id: curso.id,
+    //     nome: curso.nome
+    //   })
+    // }
+
+
   }
 
-
-  updateForm(curso: Curso) {
-    this.form.patchValue({
-      id: curso.id,
-      nome: curso.nome
-    })
-  }
 
 
   hasError(field: string) {
@@ -76,17 +83,34 @@ export class CursosFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.form.valid)
+    //console.log(this.form.valid)
     if (this.form.valid) {
       console.log('submit')
-      this.service.create(this.form.value).subscribe(
-        succes => {
-          this.modal.showAlertSuccess('Curso criado com sucesso.')
-          //this.location.back() <-- isso volta pra pagina anterior, mas pessoalmente acho ruim entao comentei
-        },
-        error => this.modal.showAlertDanger('Erro ao criar curso.'),
-        () => console.log('request completo')
-      )
+
+      //update
+      console.log(this.form.value.id)
+
+      if (this.form.value.id !== null) {
+        this.service.update(this.form.value).subscribe(
+          success => {
+            this.modal.showAlertSuccess('Update feito com sucesso.')
+            //this.location.back() <-- isso volta pra pagina anterior, mas pessoalmente acho ruim entao comentei
+          },
+          error => this.modal.showAlertDanger('Erro ao atualizar curso.'),
+          () => console.log('update completo')
+        )
+        //create
+      } else {
+        console.log(this.form.value.nome)
+        this.service.create(this.form.value.nome).subscribe(
+          success => {
+            this.modal.showAlertSuccess('Curso criado com sucesso.')
+            //this.location.back() <-- isso volta pra pagina anterior, mas pessoalmente acho ruim entao comentei
+          },
+          error => this.modal.showAlertDanger('Erro ao criar curso.'),
+          () => console.log('request completo')
+        )
+      }
     }
   }
 
@@ -94,6 +118,5 @@ export class CursosFormComponent implements OnInit {
     this.submitted = false;
     this.form.reset();
   }
-
 
 }
