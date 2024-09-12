@@ -24,8 +24,13 @@ export class CursosService {
     return this.http.get<Curso>(`${this.API}/${id}`).pipe(take(1));
   }
 
-  create(curso: Curso): Observable<Curso> { //se eu passar o ID do curso e ele for nulo, vai permanecer nulo.
-    return this.http.post<Curso>(this.API, curso).pipe(take(1))
+  create(curso: Curso): Observable<Curso> {
+    // Se o curso não tiver um ID, gera um novo ID como número inteiro
+    if (!curso.id) {
+      curso.id = Math.floor(Date.now() / 1000).toString(); // Gera um número inteiro com base no timestamp
+    }
+
+    return this.http.post<Curso>(this.API, curso).pipe(take(1));
   }
 
   update(curso: Curso) {

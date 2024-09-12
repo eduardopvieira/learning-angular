@@ -28,7 +28,6 @@ export class CursosFormComponent implements OnInit {
 
     const curso = this.route.snapshot.data['curso']
 
-
     this.form = this.fb.group({
       id: [curso.id],
       nome: [curso.nome, [Validators.required, Validators.maxLength(20)]]
@@ -75,8 +74,6 @@ export class CursosFormComponent implements OnInit {
 
   }
 
-
-
   hasError(field: string) {
     return this.form.get(field)!.errors
   }
@@ -87,9 +84,9 @@ export class CursosFormComponent implements OnInit {
     if (this.form.valid) {
       console.log('submit')
 
-      //update
       console.log(this.form.value.id)
 
+      //update
       if (this.form.value.id !== null) {
         this.service.update(this.form.value).subscribe(
           success => {
@@ -99,10 +96,11 @@ export class CursosFormComponent implements OnInit {
           error => this.modal.showAlertDanger('Erro ao atualizar curso.'),
           () => console.log('update completo')
         )
+
         //create
       } else {
-        console.log(this.form.value.nome)
-        this.service.create(this.form.value.nome).subscribe(
+        console.log(this.form.value)
+        this.service.create(this.form.value).subscribe(
           success => {
             this.modal.showAlertSuccess('Curso criado com sucesso.')
             //this.location.back() <-- isso volta pra pagina anterior, mas pessoalmente acho ruim entao comentei
