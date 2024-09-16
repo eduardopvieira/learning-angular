@@ -24,4 +24,35 @@ export class UploadFileService {
 
   }
 
+  download(url: string) {
+    return this.http.get(url, {
+      responseType: 'blob'
+    })
+  }
+
+  handleFile(res: any, fileName: string) {
+    //suporte ao chrome
+    const file = new Blob([res], {
+      type: res.type
+    });
+
+    const blob = window.URL.createObjectURL(file);
+
+    const link = document.createElement('a');
+    link.href = blob;
+    link.download = fileName
+
+    link.dispatchEvent(new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window
+    }))
+
+
+    //firefox
+    setTimeout(() => {
+      window.URL.revokeObjectURL(blob);
+      link.remove();
+    }, 100);
+  };
 }
