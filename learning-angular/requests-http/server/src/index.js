@@ -22,6 +22,18 @@ app.post('/upload', multipartMiddleWare, (req, res) => {
     res.json({ message: files });
 })
 
+app.get('/downloadExcel', (req, res) => {
+    res.download('./uploads/testeExcel.xlsx')
+})
+
+app.get('/downloadPDF', (req, res) => {
+    //res.setHeader('Content-Type', 'application/pdf');
+    console.log('chego aq no index.js')
+
+    res.download('./uploads/testePDF.pdf');
+});
+
+
 app.use((err, req, res, next) => res.json({ error: err.message }))
 
 app.listen(8000, () => {
